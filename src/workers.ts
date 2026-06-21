@@ -1,5 +1,5 @@
 import { Worker } from 'bullmq';
-import connection from './redis.connection';
+import connection from './queues/redis.connection';
 
 export const emailWorker = new Worker(
   'emailQueue',
@@ -7,7 +7,7 @@ export const emailWorker = new Worker(
     const { email, bookingId } = job.data;
     console.log(`[Job ID: ${job.id}] Booking confirmation email sent to ${email} for booking ${bookingId}`);
   },
-  { connection }
+  { connection: connection as any }
 );
 
 export const notificationWorker = new Worker(
@@ -16,7 +16,7 @@ export const notificationWorker = new Worker(
     const { eventId, customerEmails } = job.data;
     console.log(`[Job ID: ${job.id}] Notification sent to ${customerEmails.length} customers regarding event update (Event ID: ${eventId})`);
   },
-  { connection }
+  { connection: connection as any }
 );
 
 emailWorker.on('failed', (job, err) => {

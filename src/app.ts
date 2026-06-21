@@ -4,7 +4,7 @@ import { errorHandler } from './middleware/error.middleware';
 import authRoutes from './routes/auth.routes';
 import eventRoutes from './routes/event.routes';
 import bookingRoutes from './routes/booking.routes';
-import './workers'; // Initialize BullMQ workers
+// Removed BullMQ workers initialization to use in-memory queue instead
 
 const app: Application = express();
 

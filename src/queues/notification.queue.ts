@@ -1,8 +1,8 @@
-import { Queue } from 'bullmq';
-import connection from './redis.connection';
-
-export const notificationQueue = new Queue('notificationQueue', { connection });
+// Simulated in-memory async processing mechanism
 
 export const sendEventUpdateNotification = async (eventId: string, customerEmails: string[]) => {
-  await notificationQueue.add('eventUpdateNotification', { eventId, customerEmails });
+  // Simulate background processing delay
+  setTimeout(() => {
+    console.log(`[Notification Worker] Notification sent to ${customerEmails.length} customers regarding event update (Event ID: ${eventId})`);
+  }, 1000);
 };

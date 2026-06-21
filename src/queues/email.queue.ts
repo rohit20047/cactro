@@ -1,8 +1,8 @@
-import { Queue } from 'bullmq';
-import connection from './redis.connection';
-
-export const emailQueue = new Queue('emailQueue', { connection });
+// Simulated in-memory async processing mechanism
 
 export const sendBookingConfirmationEmail = async (email: string, bookingId: string) => {
-  await emailQueue.add('bookingConfirmation', { email, bookingId });
+  // Simulate background processing delay
+  setTimeout(() => {
+    console.log(`[Email Worker] Booking confirmation email sent to ${email} for booking ${bookingId}`);
+  }, 1000);
 };
