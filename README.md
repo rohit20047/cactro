@@ -1,6 +1,51 @@
 # Event Management & Ticket Booking System
 
-This is the backend API for the Event Management & Ticket Booking System, built with Node.js, TypeScript, Prisma ORM, and Neon (PostgreSQL).
+This is a production-ready backend API for an Event Management & Ticket Booking System. It supports robust role-based access control, allowing Organizers to manage events while Customers can securely browse and book tickets.
+
+## Technologies Used
+
+- **TypeScript Backend**: Strongly-typed Node.js + Express application.
+- **Neon PostgreSQL**: Serverless PostgreSQL database for high availability.
+- **Prisma ORM**: Next-generation Node.js and TypeScript ORM for safe database access.
+- **JWT Authentication**: Secure stateless authentication using JSON Web Tokens.
+- **Role-Based Access Control**: Strict `ORGANIZER` and `CUSTOMER` route protections.
+- **Event and Booking Management**: Fully transactional endpoints to prevent race conditions.
+- **Background Task Processing**: Native in-memory async processing for emails and notifications.
+- **Zod Validation**: Robust runtime schema validation for all API inputs.
+- **Layered Architecture**: Clean separation into Controllers, Services, Repositories, and Validators.
+
+## Database Tables
+
+The application relies on three primary database models configured via Prisma:
+
+### 1. User
+Stores authentication and role information.
+- `id` (UUID, Primary Key)
+- `name` (String)
+- `email` (String, Unique)
+- `password` (String, Hashed)
+- `role` (Enum: `ORGANIZER` | `CUSTOMER`)
+- `createdAt` / `updatedAt`
+
+### 2. Event
+Stores details about events created by organizers.
+- `id` (UUID, Primary Key)
+- `title` (String)
+- `description` (String)
+- `venue` (String)
+- `eventDate` (DateTime)
+- `totalTickets` (Int)
+- `availableTickets` (Int, Decremented upon booking)
+- `organizerId` (UUID, Foreign Key to `User`)
+- `createdAt` / `updatedAt`
+
+### 3. Booking
+Stores customer ticket reservations.
+- `id` (UUID, Primary Key)
+- `ticketCount` (Int)
+- `customerId` (UUID, Foreign Key to `User`)
+- `eventId` (UUID, Foreign Key to `Event`)
+- `createdAt` / `updatedAt`
 
 ## Features & Architecture
 
